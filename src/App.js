@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useState, useEffect } from 'react';
 import { Sliders } from 'react-feather';
 import './index.css';
 import './App.css';
-import './darkMode.css'
+import './darkMode.css';
 import Header from './Components/Header';
 import About from './Components/About';
 import Alert from './Components/Alert';
@@ -12,13 +12,15 @@ import WordDetails from './Components/WordDetails';
 
 function App() 
 { 
-  const options = {
-    method: 'GET',
-    headers: { 
-    'X-RapidAPI-Key': '5d9799702dmsh7bda659b7643479p1f377ejsn1aae24bf36c5',
-		'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-    }
-  };
+  const options = useMemo(() => {
+    return {
+      method: 'GET',
+      headers: { 
+      'X-RapidAPI-Key': '5d9799702dmsh7bda659b7643479p1f377ejsn1aae24bf36c5',
+      'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+      },
+    };
+  }, []);
 
   const [searchQuery, setSearchQuery] = useState('') 
   const [searchParameter, setSearchParameter] = useState('definitions')
@@ -39,32 +41,33 @@ function App()
     setSearchParameter(parameter)
   }
 
-  useEffect(() => {
-    fetchWord()
-  }, [searchParameter])
-
+  
   const url = 'https://wordsapiv1.p.rapidapi.com/words/' + searchQuery + '/' + searchParameter
-
+  
   const [alert, setAlert] = useState(false)
   const [settings, setSettings] = useState(false)
-
+  
   const closeWordDetails = () => setWordDetails(false)
   const showSettingsPanel = () => {
     setSettings(!settings)
   }
-
-  const fetchWord = () => {
+  
+  const fetchWord = useCallback(() => {
     if (searchQuery.length < 1) {
       setAlert(true)
       setTimeout(() => {setAlert(false)}, 3000)
     } else {
       fetch(url, options)
-      .then (response => response.json())
+      .then(response => response.json())
       .then(data => setData(data))
       .catch(err => console.error(err));
       setWordDetails(true)
     }
-  }
+  }, [searchQuery, options, url])
+
+  useEffect(() => {
+    fetchWord()
+  }, [searchParameter, fetchWord])
 
   useEffect(() => {
     setWord(data.word)
@@ -79,8 +82,8 @@ function App()
   }, [data])
 
   const [about, setAbout] = useState(false)
-  const [showAboutSection] = () => setAbout(true)
-  const [hideAboutSection] = () => setAbout(false)
+  const showAboutSection = () => setAbout(true)
+  const hideAboutSection = () => setAbout(false)
 
   const [theme, setTheme] = useState('light')
 
@@ -116,7 +119,7 @@ function App()
         showAboutSection={showAboutSection}
       />
 
-      <alert
+      <Alert
         alert={alert}
       />
       {wordDetails ? <WordDetails

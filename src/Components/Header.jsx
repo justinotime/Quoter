@@ -1,9 +1,9 @@
-import React from 'react'
-import { Sun } from 'react-feather'
-import { Moon } from 'react-feather'
+import React from 'react';
+import { Sun } from 'react-feather';
+import { Moon } from 'react-feather';
 function Header({showAboutSection, toggleTheme, theme}) {
     return (
-        <Header>
+        <header>
             <div className='logo'>
                 <h2>Quote</h2>
             </div>
@@ -15,7 +15,7 @@ function Header({showAboutSection, toggleTheme, theme}) {
                 <span onClick={showAboutSection} className='about'>About Words</span>
             </div>
 
-        </Header>
+        </header>
     )
 }
 export default Header
