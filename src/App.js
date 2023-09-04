@@ -12,15 +12,13 @@ import WordDetails from './Components/WordDetails';
 
 function App() 
 { 
-  const options = useMemo(() => {
-    return {
+  const options = {
       method: 'GET',
       headers: { 
       'X-RapidAPI-Key': '5d9799702dmsh7bda659b7643479p1f377ejsn1aae24bf36c5',
       'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
       },
     };
-  }, []);
 
   const [searchQuery, setSearchQuery] = useState('') 
   const [searchParameter, setSearchParameter] = useState('definitions')
@@ -36,10 +34,14 @@ function App()
   const [syllables, setSyllables] = useState('')
   const [frequency, setFrequency] = useState('')
   const [pronunciation, setPronunciation] = useState('')
-
+  
   const searchDifferentOption = (parameter) => {
     setSearchParameter(parameter)
   }
+
+  useEffect(() => {
+    fetchWord()
+  }, [searchParameter])
 
   
   const url = 'https://wordsapiv1.p.rapidapi.com/words/' + searchQuery + '/' + searchParameter
@@ -52,7 +54,7 @@ function App()
     setSettings(!settings)
   }
   
-  const fetchWord = useCallback(() => {
+  const fetchWord = () => {
     if (searchQuery.length < 1) {
       setAlert(true)
       setTimeout(() => {setAlert(false)}, 3000)
@@ -63,11 +65,8 @@ function App()
       .catch(err => console.error(err));
       setWordDetails(true)
     }
-  }, [searchQuery, options, url])
+  }
 
-  useEffect(() => {
-    fetchWord()
-  }, [searchParameter, fetchWord])
 
   useEffect(() => {
     setWord(data.word)
@@ -99,7 +98,7 @@ function App()
 
   const setThemeOnRender = () => {
     const theme = localStorage.getItem('theme')
-    if (theme === 'light') {
+    if (theme == 'light') {
       setTheme('light')
     } else {
       setTheme('dark')
