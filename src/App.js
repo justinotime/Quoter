@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { Sliders } from 'react-feather';
+import { Search } from 'react-feather';
 import './index.css';
 import './App.css';
 import './darkMode.css';
@@ -19,7 +20,7 @@ function App()
       'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
       },
     };
-
+  const inputRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('') 
   const [searchParameter, setSearchParameter] = useState('definitions')
   const [data, setData] = useState('')
@@ -140,10 +141,17 @@ function App()
       <div className='search-bar'>
         <input
           placeholder='Search...'
+          ref={inputRef}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}></input>
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') {
+              fetchWord();
+            }
+          }}
+          ></input>
           <div className='button-container'>
-            <button className='submit' onClick={fetchWord}>Search Word</button>
+            <button className='submit' onClick={fetchWord}><Search /></button>
             <button
               onClick={showSettingsPanel}
               title='Toggle Search Settings'

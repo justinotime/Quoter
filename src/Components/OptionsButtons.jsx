@@ -29,7 +29,7 @@ function OptionsButtons({ settings, searchParameter, searchDifferentOption }) {
 
           <button
           onClick={() => searchDifferentOption('syllables')} 
-          className={searchParameter === 'syllables' ? 'option active' : 'option'}>syllables</button>
+          className={searchParameter === 'syllables' ? 'option active' : 'option'}>Syllables</button>
 
           <button
           onClick={() => searchDifferentOption('frequency')} 
