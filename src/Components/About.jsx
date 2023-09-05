@@ -4,7 +4,6 @@ function About ({ about, hideAboutSection }) {
     return (
         <div className={about ? 'about-section' : 'about-section hidden'}>
             <h1>About</h1>
-
             <p>Lorem Ipsum
                 ....
             </p>
