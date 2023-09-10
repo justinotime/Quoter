@@ -26,7 +26,6 @@ function App()
   const [data, setData] = useState('')
   const [word, setWord] = useState('')
   const [wordDetails, setWordDetails] = useState(false)
-
   const [definitions, setDefinitions] = useState('')
   const [examples, setExamples] = useState('')
   const [rhymes, setRhymes] = useState('')
