@@ -6,6 +6,7 @@ html {
   
   * {
     color: #616161;
+    /* alternative color #EEEEEE */
     transition: 0.2s;
   }
   
@@ -34,7 +35,7 @@ html {
   
   body.dark * {
     transition: 0.2s;
-    color: #cfcfcf;
+    color: #EEEEEE;
   }
   
   .App {
